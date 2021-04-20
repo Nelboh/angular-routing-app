@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 
@@ -16,14 +16,23 @@ export class ServerComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    const id = +this.route.snapshot.params['id']; // + converts the id into a number, not a string
-    this.server = this.serversService.getServer(id);
-    this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.server = this.serversService.getServer(+params['id']);
-        }
-      );
+    this.route.data.subscribe(
+      (data: Data) => {
+        this.server = data['server'];
+        // The 'server' by data here is the same name that we 
+        // assigned to resolve in app-routing.module on line 27.
+        // Change one, change the other!
+      }
+    );
+    // resolver replaces all the below
+    // const id = +this.route.snapshot.params['id']; // + converts the id into a number, not a string
+    // this.server = this.serversService.getServer(id);
+    // this.route.params
+    //   .subscribe(
+    //     (params: Params) => {
+    //       this.server = this.serversService.getServer(+params['id']);
+    //     }
+    //   );
   }
 
   onEdit() {
