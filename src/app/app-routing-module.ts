@@ -41,6 +41,16 @@ const appRoutes: Routes = [
     // declared already in app.module.ts
     imports: [
         RouterModule.forRoot(appRoutes)
+        // RouterModule.forRoot(appRoutes, {useHash: true})
+        // The above is a fallback for older browsers. We're
+        // never changing URL in reality -- we're just showing
+        // and hiding different components, even if the URL 
+        // appears to change. Modern browsers are able to deal
+        // with this, but older ones can't, so we can mimic
+        // this behaviour by using hashes for internal navigation
+        // on a page. It's debatable how often this is needed
+        // in reality now, because most modern browsers will be
+        // fine with the single-page setup.
     ],
     exports: [RouterModule]
 })
